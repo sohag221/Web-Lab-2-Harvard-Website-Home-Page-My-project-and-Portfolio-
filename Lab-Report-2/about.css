@@ -1,0 +1,300 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Color Variables */
+:root {
+    --bg-color: #f2f2f2;
+    --text-color: #2c3e50;
+    --primary-color: #4a90e2;
+    --secondary-color: #34495e;
+    --accent-color: #2980b9;
+    --dark-bg: #1a1a1a;
+}
+
+/* Header Styles */
+.header {
+    background: var(--dark-bg);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 10px 0;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+/* Add search and menu buttons */
+.header-right {
+    display: flex;
+    gap: 15px;
+}
+
+.search-btn, .menu-btn {
+    background: rgba(8, 143, 200, 0.1);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.search-btn:hover, .menu-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* About Hero Section */
+.about-hero {
+    padding: 140px 0 80px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>') 90% -25% no-repeat;
+    opacity: 0.03;
+    transform: scale(3);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.profile-img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: translateY(-10px);
+}
+
+.title-wrapper {
+    margin-bottom: 30px;
+}
+
+.greeting {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #fff, #4a90e2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.role-badge {
+    display: inline-block;
+    background: rgba(74, 144, 226, 0.1);
+    border: 2px solid var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.specialties {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.specialty-tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.specialty-tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* About Details Section */
+.about-details {
+    padding: 80px 0;
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+.about-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.intro {
+    font-size: 1.3rem;
+    color: #e5e7eb;
+    margin-bottom: 50px;
+    line-height: 1.8;
+}
+
+.section-block {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-block h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.section-block p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.skills-list li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #e5e7eb;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.skills-list li:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .profile-img {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .specialties {
+        justify-content: center;
+    }
+
+    .about-image img {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .about-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .skills-list {
+        grid-template-columns: 1fr;
+    }
+}
