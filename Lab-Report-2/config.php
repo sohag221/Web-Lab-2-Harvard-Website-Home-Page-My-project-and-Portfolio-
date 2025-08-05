@@ -1,4 +1,8 @@
 <?php
+// Enable error reporting for debugging (remove in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Database configuration for lab5 database
 class Database {
     private $host = 'localhost';
@@ -9,18 +13,36 @@ class Database {
     
     public function __construct() {
         try {
-            $this->connection = new PDO(
-                "mysql:host={$this->host};dbname={$this->database};charset=utf8mb4",
-                $this->username,
-                $this->password,
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false,
-                ]
-            );
+            $dsn = "mysql:host={$this->host};dbname={$this->database};charset=utf8mb4";
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ];
+            
+            $this->connection = new PDO($dsn, $this->username, $this->password, $options);
+            error_log("Database connection successful");
+            
         } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+            error_log("Database connection failed: " . $e->getMessage());
+            
+            // Return a more specific error message
+            if (strpos($e->getMessage(), 'Unknown database') !== false) {
+                die(json_encode([
+                    'success' => false, 
+                    'message' => 'Database "lab5" not found. Please create the database first.'
+                ]));
+            } elseif (strpos($e->getMessage(), 'Access denied') !== false) {
+                die(json_encode([
+                    'success' => false, 
+                    'message' => 'Database access denied. Please check username/password.'
+                ]));
+            } else {
+                die(json_encode([
+                    'success' => false, 
+                    'message' => 'Database connection failed: ' . $e->getMessage()
+                ]));
+            }
         }
     }
     

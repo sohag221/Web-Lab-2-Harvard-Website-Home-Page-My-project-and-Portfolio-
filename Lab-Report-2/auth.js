@@ -53,12 +53,28 @@ function submitForm(form, url) {
     submitBtn.textContent = 'Please wait...';
     submitBtn.disabled = true;
     
+    console.log('Submitting to:', url);
+    console.log('Form data:', Object.fromEntries(formData));
+    
     fetch(url, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        // Check if the response is actually JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Server did not return JSON. Content-Type: ' + contentType);
+        }
+        
+        return response.json();
+    })
     .then(data => {
+        console.log('Response data:', data);
+        
         if (data.success) {
             showMessage(data.message, 'success');
             
@@ -80,8 +96,14 @@ function submitForm(form, url) {
         }
     })
     .catch(error => {
-        showMessage('Network error. Please try again.', 'error');
-        console.error('Error:', error);
+        console.error('Full error details:', error);
+        
+        let errorMessage = 'Network error. Please check:';
+        errorMessage += '\n• Is your web server (Apache) running?';
+        errorMessage += '\n• Are you accessing via http://localhost/?';
+        errorMessage += '\n• Is PHP working? Test with test-php.php';
+        
+        showMessage(errorMessage, 'error');
     })
     .finally(() => {
         // Restore button state

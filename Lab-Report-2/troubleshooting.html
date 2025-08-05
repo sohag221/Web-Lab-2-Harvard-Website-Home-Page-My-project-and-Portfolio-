@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .step {
+            background: #f0f8ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4299e1;
+            border-radius: 4px;
+        }
+        .warning {
+            background: #fff5f5;
+            border-left-color: #e53e3e;
+        }
+        .success {
+            background: #f0fff4;
+            border-left-color: #38a169;
+        }
+        code {
+            background: #f7fafc;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .test-button {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 User Registration System - Troubleshooting Guide</h1>
+    
+    <div class="warning step">
+        <h3>⚠️ Common Issue: Network Error on Registration</h3>
+        <p>If you're getting "Network error. Please try again" when clicking registration, follow these steps:</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 1: Check if PHP is Working</h3>
+        <p>First, test if PHP is working on your server:</p>
+        <button class="test-button" onclick="testPHP()">Test PHP</button>
+        <p>This should open <code>test-php.php</code> and show PHP information.</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Verify Server Setup</h3>
+        <ul>
+            <li>✅ <strong>XAMPP/WAMP/MAMP</strong> is installed and running</li>
+            <li>✅ <strong>Apache</strong> service is started (green light)</li>
+            <li>✅ <strong>MySQL</strong> service is started (green light)</li>
+            <li>✅ Files are in the correct directory (htdocs/www)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Check URL Access</h3>
+        <p>Make sure you're accessing the site via:</p>
+        <code>http://localhost/your-folder-name/portfolio.html</code>
+        <p><strong>NOT</strong> via file:// protocol</p>
+        <button class="test-button" onclick="checkURL()">Check Current URL</button>
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Test Database Connection</h3>
+        <p>The test-php.php file will also test your database connection.</p>
+        <p>Common database issues:</p>
+        <ul>
+            <li>Database "lab5" doesn't exist</li>
+            <li>Wrong username/password in config.php</li>
+            <li>MySQL service not running</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 5: Check Browser Console</h3>
+        <p>Open browser Developer Tools (F12) and check the Console tab for error messages.</p>
+        <button class="test-button" onclick="testRegistration()">Test Registration Form</button>
+    </div>
+
+    <div class="success step">
+        <h3>✅ Quick Fix Checklist</h3>
+        <ol>
+            <li>Start XAMPP/WAMP control panel</li>
+            <li>Start Apache and MySQL services</li>
+            <li>Access via <code>http://localhost/</code></li>
+            <li>Check config.php database credentials</li>
+            <li>Ensure lab5 database exists</li>
+        </ol>
+    </div>
+
+    <script>
+        function testPHP() {
+            window.open('test-php.php', '_blank');
+        }
+        
+        function checkURL() {
+            const currentURL = window.location.href;
+            const isLocalhost = currentURL.includes('localhost') || currentURL.includes('127.0.0.1');
+            const isHTTP = currentURL.startsWith('http://') || currentURL.startsWith('https://');
+            
+            let message = `Current URL: ${currentURL}\n\n`;
+            
+            if (!isHTTP) {
+                message += "❌ ERROR: You're using file:// protocol\n";
+                message += "✅ SOLUTION: Access via http://localhost/your-folder/\n";
+            } else if (!isLocalhost) {
+                message += "⚠️ WARNING: Not using localhost\n";
+                message += "✅ RECOMMENDATION: Use http://localhost/ for local development\n";
+            } else {
+                message += "✅ URL looks correct!\n";
+            }
+            
+            alert(message);
+        }
+        
+        function testRegistration() {
+            console.log('Testing registration system...');
+            
+            // Test if PHP files are accessible
+            fetch('register.php', {
+                method: 'POST',
+                body: new FormData()
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Content-Type:', response.headers.get('content-type'));
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                alert('Check the browser console (F12) for detailed test results');
+            })
+            .catch(error => {
+                console.error('Test failed:', error);
+                alert('Test failed! Check console for details. Error: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
