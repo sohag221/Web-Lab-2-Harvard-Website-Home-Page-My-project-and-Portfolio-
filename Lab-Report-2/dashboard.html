@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Data Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="image/sohag.png" alt="Sohag" class="logo-img">
+                    <span class="name">Md Sohag</span>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About Me</a></li>
+                    <li><a href="portfolio.html" class="nav-link">My Portfolio</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <span class="user-welcome" id="userWelcome">Welcome!</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2>Bio Data Management</h2>
+                    <p>View, update or delete your personal information</p>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="view">View Data</button>
+                    <button class="tab-btn" data-tab="update">Update Data</button>
+                    <button class="tab-btn" data-tab="delete">Delete Data</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- View Bio Data -->
+                    <div id="view" class="tab-pane active">
+                        <div class="data-container">
+                            <div class="loading-indicator">Loading your data...</div>
+                            <div class="bio-data-display"></div>
+                        </div>
+                    </div>
+
+                    <!-- Update Bio Data -->
+                    <div id="update" class="tab-pane">
+                        <div class="update-form-container">
+                            <p class="instruction">Update your information below:</p>
+                            <form id="updateBioForm" class="bio-form">
+                                <!-- Form will be populated by JavaScript -->
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Delete Bio Data -->
+                    <div id="delete" class="tab-pane">
+                        <div class="delete-container">
+                            <div class="warning-box">
+                                <h3>⚠️ Warning: Data Deletion</h3>
+                                <p>You are about to delete your personal information. This action cannot be undone.</p>
+                                <p>Your account will remain active, but all your bio data will be removed.</p>
+                                
+                                <div class="confirmation-box">
+                                    <label for="confirmDelete">
+                                        <input type="checkbox" id="confirmDelete"> I understand that this action is permanent
+                                    </label>
+                                    
+                                    <button id="deleteBioBtn" class="btn-delete" disabled>Delete My Bio Data</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="dashboard-actions">
+                    <a href="protected-bio.html" class="btn-secondary">Back to Bio Form</a>
+                    <a href="portfolio.html" class="btn-primary">Go to Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
