@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Operations Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .result { margin-top: 10px; padding: 10px; background: #f5f5f5; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Bio Data CRUD Operations Test</h1>
+    <p>This page tests all CRUD operations for bio data.</p>
+    
+    <div class="test-section">
+        <h3>Test CREATE Operation</h3>
+        <button onclick="testCreate()">Test Create Bio Data</button>
+        <div id="create-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test READ Operation</h3>
+        <button onclick="testRead()">Test Read Bio Data</button>
+        <div id="read-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test UPDATE Operation</h3>
+        <button onclick="testUpdate()">Test Update Bio Data</button>
+        <div id="update-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test DELETE Operation</h3>
+        <button onclick="testDelete()">Test Delete Bio Data</button>
+        <div id="delete-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Quick Actions</h3>
+        <button onclick="window.location.href='bio-crud-manager.html'">Go to CRUD Manager</button>
+        <button onclick="window.location.href='protected-bio.html'">Go to Bio Form</button>
+    </div>
+
+    <script>
+        function displayResult(elementId, message, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = message;
+            element.className = isSuccess ? 'result success' : 'result error';
+        }
+
+        function testCreate() {
+            const testData = new FormData();
+            testData.append('first_name', 'Test');
+            testData.append('last_name', 'User');
+            testData.append('email', 'test@example.com');
+            testData.append('date_of_birth', '1990-01-01');
+            testData.append('gender', 'male');
+            testData.append('phone', '123456789');
+            testData.append('address', 'Test Address');
+            testData.append('city', 'Test City');
+            testData.append('country', 'Test Country');
+            testData.append('occupation', 'Tester');
+            testData.append('education', 'bachelor');
+            testData.append('bio', 'This is a test bio');
+            testData.append('newsletter', '1');
+            testData.append('terms', '1');
+
+            fetch('bio-crud.php?action=create', {
+                method: 'POST',
+                body: testData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResult('create-result', 'CREATE Success: ' + data.message, true);
+                } else {
+                    displayResult('create-result', 'CREATE Error: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                displayResult('create-result', 'CREATE Network Error: ' + error.message, false);
+            });
+        }
+
+        function testRead() {
+            fetch('bio-crud.php?action=read')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.data) {
+                        displayResult('read-result', 'READ Success: Found bio data for ' + data.data.first_name + ' ' + data.data.last_name, true);
+                    } else {
+                        displayResult('read-result', 'READ Success: No bio data found', true);
+                    }
+                } else {
+                    displayResult('read-result', 'READ Error: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                displayResult('read-result', 'READ Network Error: ' + error.message, false);
+            });
+        }
+
+        function testUpdate() {
+            const updateData = {
+                first_name: 'Updated',
+                last_name: 'User',
+                email: 'updated@example.com',
+                date_of_birth: '1990-01-01',
+                gender: 'female',
+                phone: '987654321',
+                address: 'Updated Address',
+                city: 'Updated City',
+                country: 'Updated Country',
+                occupation: 'Updated Tester',
+                education: 'master',
+                bio: 'This is an updated test bio',
+                newsletter: 0,
+                terms: 1
+            };
+
+            fetch('bio-crud.php?action=update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResult('update-result', 'UPDATE Success: ' + data.message, true);
+                } else {
+                    displayResult('update-result', 'UPDATE Error: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                displayResult('update-result', 'UPDATE Network Error: ' + error.message, false);
+            });
+        }
+
+        function testDelete() {
+            if (!confirm('Are you sure you want to delete the test bio data?')) {
+                return;
+            }
+
+            fetch('bio-crud.php?action=delete', {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResult('delete-result', 'DELETE Success: ' + data.message, true);
+                } else {
+                    displayResult('delete-result', 'DELETE Error: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                displayResult('delete-result', 'DELETE Network Error: ' + error.message, false);
+            });
+        }
+    </script>
+</body>
+</html>
